@@ -10,11 +10,15 @@ class UARTRobotStream():
     Similar to a RobotStream.
     Should be transport agnostic, but tested for UART.
     """
-    def __init__(self, transport=None):
+    def __init__(self, transport=None, sinks=None):
         self.transport = transport
+        self.transport.register_robot(self)
         self.last_time = time.time()
-        self.dispatcher=AsynchDispatch(sinks={'telem_data':[self.telem_data_received]},
+#        self.dispatcher=AsynchDispatch(sinks={'telem_data':[self.telem_data_received]},
+#                                       callbacks={'packet':[self.packet_received]})
+        self.dispatcher=AsynchDispatch(sinks=sinks,
                                        callbacks={'packet':[self.packet_received]})
+        #self.dispatcher.add_sinks({'telem_data':[self.telem_data_received]})
 
     def put(self, message):
         self.dispatcher.put(message)
@@ -25,6 +29,7 @@ class UARTRobotStream():
             self.transport.put(Message('packet',pkt))
 
     def set_thrust_open_loop(self, left, right):
+        #print "settting thrust open loop"
         thrust = [left, right, 200] #TODO 200?
         self.send_packet('SET_THRUST_OPEN_LOOP', struct.pack("3h", *thrust))
 
@@ -38,4 +43,4 @@ class UARTRobotStream():
         payload = message.data.data
         pattern = '=LLll'+13*'h'
         data = struct.unpack(pattern, payload)
-        print "data=" + str(data)
+        #print "imageproc_py data=" + str(data)
