@@ -31,7 +31,7 @@ class RobotStream():
     self.count = 0
     
     self.motor_gains_set = False
-    self.telemetry = True
+    self.telemetry = False
     self.running = False
     
     self.received_telemetry = 0
@@ -134,7 +134,11 @@ class RobotStream():
   def set_pid_gains(self, gains):
     print 'Setting Gains'
     self.send_packet('SET_PID_GAINS',pack('10h',*gains))
-            
+
+  def set_thrust_open_loop(self, left, right):
+    thrust = [left, right, 200] #TODO 200?
+    self.send_packet('SET_THRUST_OPEN_LOOP',pack('3h',*thrust))    
+
   def set_thrust_closed_loop(self, thrust):
     print 'Setting Thrust'
     self.send_packet('SET_THRUST_CLOSED_LOOP',pack('5h',*thrust))

@@ -59,9 +59,9 @@ STANDARD_PROTOCOL = [
   #TODO: Reconcile octoroach standard with turning bot code
   #ProtocolEntry('SLEEP', 0x8C),
   ProtocolEntry('SET_VEL_PROFILE', 0x8C, '24h'),
-  ProtocolEntry('WHO_AM_I', 0x8D),
-  ProtocolEntry('START_TELEM', 0x8E, '3h'),
-  ProtocolEntry('ZERO_POS', 0x8F, '=2l'),
+  ProtocolEntry('WHO_AM_I', 0x8E),
+  ProtocolEntry('START_TELEM', 0x8F, '3h'),
+  ProtocolEntry('ZERO_POS', 0x90, '=2l'),
   #ProtocolEntry('SET_HALL_GAINS', 0x91),
   #ProtocolEntry('SET_TAIL_QUEUE', 0x92)
   # CMD values of 0xF0(240) - 0xFF(255) are reserved for future use
